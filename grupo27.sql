@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`paciente` (
     `P_Nombre` VARCHAR(30) NOT NULL,
     `P_Edad` INT(2) NOT NULL,
     `P_Fecha_diag` DATE NOT NULL,
-    `P_ID_variante` VARCHAR(5) NOT NULL);
+    `P_ID_variante` VARCHAR(5) NOT NULL)
 ENGINE=INNOBD;
 
 INSERT INTO paciente (P_DNI, P_Nombre, P_Edad, P_Fech_diag, P_ID_variante)
