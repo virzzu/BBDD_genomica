@@ -81,4 +81,4 @@ VALUES
 ('22299194W', 'Alan Brito', 80, 06-06-2025, 'var7'),
 ('66611666B', 'Elba Lazo', 26, 08-01-2026, 'var8'),
 ('12141621C', 'Aniceto Espidiforo', 65, 03-01-2025, 'var9'),
-('90977786H', 'Glácida sinclética', 49, 11-05-2025, 'var1');
+('90977786H', 'Glácida sinclética', 49, 11-05-2025, 'var10');
