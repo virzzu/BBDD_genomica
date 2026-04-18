@@ -62,7 +62,7 @@ VALUES
 ('NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
 
 
-CREATE TABLE IF NOT EXISTS `grupo27`.`paciente` (
+CREATE TABLE IF NOT EXISTS 'grupo27'.'paciente' (
     'P_DNI' VARCHAR(50) PRIMARY KEY NOT NULL,
     'P_Nombre' VARCHAR(30) NOT NULL,
     'P_Edad' INT(2) NOT NULL,
