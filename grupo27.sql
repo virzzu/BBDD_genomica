@@ -60,3 +60,25 @@ VALUES
 ('NM_000249.4:c.35delG', 'MTHFR', '35', 'DEL', 'G', '-', 'chr13:20189547'), 
 ('NM_001354689.2:c.5266dupC', 'TNF',  '5266', 'INS', '-', 'C', 'chr17:43070945'), 
 ('NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
+
+
+CREATE TABLE IF NOT EXISTS `grupo27`.`paciente` (
+    `P_DNI` VARCHAR(50) PRIMARY KEY NOT NULL,
+    `P_Nombre` VARCHAR(30) NOT NULL,
+    `P_Edad` INT(2) NOT NULL,
+    `P_Fecha_diag` DATE NOT NULL,
+    `P_ID_variante` VARCHAR(5) NOT NULL)
+ENGINE=INNOBD;
+
+INSERT INTO paciente (P_DNI, P_Nombre, P_Edad, P_Fech_diag, P_ID_variante)
+VALUES
+(`99966699Y`, `Leovigildo de Biedma`, 55, 02/02/2025 , `var1`),
+(`71007100H`, `Ambrosio Gómez`, 62, 03/03/2025, `var2`),
+(`09111250P`, `Eufrasio De la O`, 49, 08/01/2026, `var3`),
+(`30020011A`, `María Dolores de Barriga`, 31, 21/11/2025, `var4`),
+(`52525252V`, `Inés Esario`, 45, 11/12/2025, `var5`),
+(`11223344B`, `Aitor Menta`, 21, 07/09/2025, `var6`),
+(`22299194W`, `Alan Brito`, 80, 06/06/2025, `var7`),
+(`66611666B`, `Elba Lazo`, 26, 08/01/2026, `var8`),
+(`12141621C`, `Aniceto Espidiforo`, 65, 03/01/2025, `var9`),
+(`90977786H`, `Glácida sinclética`, 49, 11/05/2025, `var1'`);
