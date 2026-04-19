@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (variantes
     v_secuencia INT(6) NOT NULL,
     v_tipo_variante VARCHAR(10) NOT NULL,
     v_alelo_referencia VARCHAR(15) NOT NULL,
-    v_alelo_mutado VARCHAR(6) DEFAULT ('-'),
+    v_alelo_mutado VARCHAR(6) DEFAULT '-',
     v_posicion_cromosomica VARCHAR(50) NOT NULL,
     FOREIGN KEY (`v_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`));
 
