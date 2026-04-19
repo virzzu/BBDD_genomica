@@ -40,7 +40,7 @@ VALUES ('ERROR1', 1, 'Gen Fallido', '100');
 
 CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (variantes
     v_nomenclatura_c VARCHAR(50) PRIMARY KEY NOT NULL,
-    v_id_gen VARCHAR(15) NOT NULL  ,
+    v_id_gen VARCHAR(15) NOT NULL,
     v_secuencia INT(6) NOT NULL,
     v_tipo_variante VARCHAR(10) NOT NULL,
     v_alelo_referencia VARCHAR(15) NOT NULL,
@@ -48,18 +48,18 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (variantes
     v_posicion_cromosomica VARCHAR(50) NOT NULL,
     FOREIGN KEY (`v_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`));
 
-INSERT INTO Variantes (v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_alelo_mutado, v_posicion_cromosomica)
+INSERT INTO Variantes (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_alelo_mutado, v_posicion_cromosomica)
 VALUES 
-('NM_000546.5:c.215C>G', 'TP53', '215', 'SNV', 'C', 'G', 'chr17:7673803'), 
-('NM_007294.4:c.68_69del', 'BRCA1', '68', 'DEL', 'AG', '-', 'chr17:43045729'), 
-('NM_000059.4:c.5946delT', 'APOE', '5946', 'DEL', 'T', '-', 'chr13:32356432'), 
-('NM_004333.6:c.1799T>A', 'INS',  '1799', 'SNV', 'T', 'A', 'chr7:140453136'), 
-('NM_005228.5:c.2573T>G', 'EGFR', '2573', 'SNV', 'T', 'G', 'chr7:55181378'), 
-('NM_000314.8:c.1582G>A', 'CFTR','1582', 'SNV', 'G', 'A', 'chr10:87863126'), 
-('NM_000518.5:c.20A>T', 'ACE2', '20', 'SNV', 'A', 'T', 'chr11:5227002'), 
-('NM_000249.4:c.35delG', 'MTHFR', '35', 'DEL', 'G', '-', 'chr13:20189547'), 
-('NM_001354689.2:c.5266dupC', 'TNF',  '5266', 'INS', '-', 'C', 'chr17:43070945'), 
-('NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
+('var1', 'NM_000546.5:c.215C>G', 'TP53', '215', 'SNV', 'C', 'G', 'chr17:7673803'), 
+('var2', 'NM_007294.4:c.68_69del', 'BRCA1', '68', 'DEL', 'AG', '-', 'chr17:43045729'), 
+('var3', 'NM_000059.4:c.5946delT', 'APOE', '5946', 'DEL', 'T', '-', 'chr13:32356432'), 
+('var4', 'NM_004333.6:c.1799T>A', 'INS',  '1799', 'SNV', 'T', 'A', 'chr7:140453136'), 
+('var5', 'NM_005228.5:c.2573T>G', 'EGFR', '2573', 'SNV', 'T', 'G', 'chr7:55181378'), 
+('var6', 'NM_000314.8:c.1582G>A', 'CFTR','1582', 'SNV', 'G', 'A', 'chr10:87863126'), 
+('var7', 'NM_000518.5:c.20A>T', 'ACE2', '20', 'SNV', 'A', 'T', 'chr11:5227002'), 
+('var8', 'NM_000249.4:c.35delG', 'MTHFR', '35', 'DEL', 'G', '-', 'chr13:20189547'), 
+('var9', 'NM_001354689.2:c.5266dupC', 'TNF',  '5266', 'INS', '-', 'C', 'chr17:43070945'), 
+('var10', 'NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
 
 CREATE TABLE IF NOT EXISTS `paciente` (
     `P_DNI` VARCHAR(50) NOT NULL,
