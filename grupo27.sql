@@ -83,3 +83,28 @@ VALUES
 ('66611666B', 'Elba Lazo', 26, '2026-01-08', 'var8'),
 ('12141621C', 'Aniceto Espidiforo', 65, '2025-01-03', 'var9'),
 ('90977786H', 'Glácida sinclética', 49, '2025-05-11', 'var10');
+
+CREATE TABLE IF NOT EXISTS `estudio` (
+	`E_id_gen` VARCHAR(45) NOT NULL,
+    `E_id_variante` VARCHAR(10) NOT NULL,
+	`E_Referencia_DOI` VARCHAR(8) NOT NULL PRIMARY KEY,
+	`E_Fecha_publicacion` INT(8) NOT NULL,
+    `E_Revista` VARCHAR(50) NOT NULL,
+    `E_Titulo` VARCHAR(150) NOT NULL,
+    CONSTRAINT `Formato_referencia_DOI` CHECK (`E_Referencia_DOI` REGEXP '^[a-zA-Z]{4}/[0-9]{3}$'), # cuatro letras, /, tres números
+    FOREIGN KEY(`E_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`),
+    FOREIGN KEY(`E_id_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`))
+    ENGINE=INNODB;
+    
+INSERT INTO estudio (E_id_gen, E_id_variante, E_Referencia_DOI, E_Fecha_publicacion, E_Revista, E_Titulo )
+VALUES
+('TP53', 'var1', 'ABCD/123', 07072003, 'Nature', 'TP53 role in cell homeostasis'),
+('BRCA1', 'var2', 'BRCA/001', 15102022, 'Science', 'DNA repair mechanisms and BRCA1 mutations'),
+('APOE', 'var3', 'APOE/555', 20012023, 'The Cell', 'Lipid metabolism and Alzheimer risk factors'),
+('INS', 'var4', 'INSU/777', 12052021, 'Diabetes Care', 'Insulin gene variants in early-onset diabetes'),
+('EGFR', 'var5', 'CANC/999', 30082024, 'Cell', 'Targeted therapies for EGFR mutant tumors'),
+('CFTR', 'var6', 'CFTR/101', 05112020, 'ROSaL', 'Chloride channel function in cystic fibrosis'),
+('ACE2', 'var7', 'SARS/202', 22032022, 'Virology', 'ACE2 receptor binding and viral entry'),
+('MTHFR', 'var8', 'FOLA/333', 14022023, 'Nutrients', 'MTHFR enzymatic activity and folate processing'),
+('TNF', 'var9', 'INFL/444', 09092021, 'Immunology', 'Cytokine response in chronic inflammation'),
+('MYH7', 'var10', 'MYOH/888', 11122024, 'Corazon', 'Myosin heavy chain mutations in heart disease');
