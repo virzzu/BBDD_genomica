@@ -43,10 +43,10 @@ VALUES ('ERROR1', 1, 'Gen Fallido', '100');
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (
-    v_id_variante VARCHAR(10),
-    v_nomenclatura_c VARCHAR(50) NOT NULL PRIMARY KEY,
-    v_id_gen VARCHAR(15) NOT NULL  ,
-    v_secuencia INT(6) NOT NULL,
+    v_id_variante VARCHAR(10) PRIMARY KEY,
+    v_nomenclatura_c VARCHAR(50) NOT NULL ,
+    v_id_gen VARCHAR(15) NOT NULL ,
+    v_secuencia INT NOT NULL,
     v_tipo_variante VARCHAR(10) NOT NULL,
     v_alelo_referencia VARCHAR(15) DEFAULT '-',
     v_alelo_mutado VARCHAR(6) NOT NULL,
