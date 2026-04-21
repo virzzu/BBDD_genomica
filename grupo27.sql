@@ -38,6 +38,10 @@ VALUES ('ERROR1', 1, '100');
 INSERT INTO gen (G_id_gen, G_cromosoma, G_nombre_gen, G_posicion_gen)
 VALUES ('ERROR1', 1, 'Gen Fallido', '100');
 
+-- -----------------------------------------------------
+-- Table `grupo27`.`variantes`
+-- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (
     v_id_variante VARCHAR(10),
     v_nomenclatura_c VARCHAR(50) NOT NULL PRIMARY KEY,
@@ -62,6 +66,10 @@ VALUES
 ('var9', 'NM_001354689.2:c.5266dupC', 'TNF',  '5266', 'INS', '-', 'C', 'chr17:43070945'), 
 ('var10', 'NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
 
+-- -----------------------------------------------------
+-- Table `grupo27`.`paciente`
+-- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `paciente` (
     `P_DNI` VARCHAR(50) NOT NULL,
     `P_Nombre` VARCHAR(30) NOT NULL,
@@ -83,6 +91,10 @@ VALUES
 ('66611666B', 'Elba Lazo', 26, '2026-01-08', 'var8'),
 ('12141621C', 'Aniceto Espidiforo', 65, '2025-01-03', 'var9'),
 ('90977786H', 'Glácida sinclética', 49, '2025-05-11', 'var10');
+
+-- -----------------------------------------------------
+-- Table `grupo27`.`estudio`
+-- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `estudio` (
 	`E_id_gen` VARCHAR(45) NOT NULL,
@@ -108,3 +120,30 @@ VALUES
 ('MTHFR', 'var8', 'FOLA/333', 14022023, 'Nutrients', 'MTHFR enzymatic activity and folate processing'),
 ('TNF', 'var9', 'INFL/444', 09092021, 'Immunology', 'Cytokine response in chronic inflammation'),
 ('MYH7', 'var10', 'MYOH/888', 11122024, 'Corazon', 'Myosin heavy chain mutations in heart disease');
+
+-- -----------------------------------------------------
+-- Table `grupo27`.`anotacion`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `grupo27`.`anotacion` (
+   `A_id_anotacion` VARCHAR(45) NOT NULL PRIMARY KEY,
+    `A_función_gen` TEXT NOT NULL,
+    `A_tipo` VARCHAR(100) NOT NULL,
+    `A_id_gen` VARCHAR(45) NOT NULL,
+    `A_id_variante` VARCHAR(10) NULL, 
+    FOREIGN KEY (`A_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`),
+    FOREIGN KEY (`A_id_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`)) 
+    ENGINE=INNODB;
+    
+INSERT INTO `grupo27`.`anotacion` (A_id_anotacion, A_función_gen, A_tipo, A_id_gen, A_id_variante)
+VALUES 
+('ANOT001', 'Mantenimiento de la integridad genómica mediante la parada del ciclo celular.', 'Funcional', 'TP53', NULL),
+('ANOT002', 'Variante patogénica vinculada a un aumento del riesgo de tumores en edad temprana.', 'Clínica', 'TP53', 'var1'),
+('ANOT003', 'Reparación de roturas de doble cadena en el ADN por recombinación homóloga.', 'Funcional', 'BRCA1', NULL),
+('ANOT004', 'Variante clasificada como de alta penetrancia para cáncer de mama hereditario.', 'Clínica', 'BRCA1', 'var2'),
+('ANOT005', 'Transporte de colesterol y otras grasas en el torrente sanguíneo.', 'Metabólica', 'APOE', NULL),
+('ANOT006', 'Alelo asociado con la acumulación de placas de amiloide en el tejido cerebral.', 'Clínica', 'APOE', 'var3'),
+('ANOT007', 'Codificación de la hormona responsable de la absorción de glucosa.', 'Fisiológica', 'INS', 'var4'),
+('ANOT008', 'Implicado en la señalización celular para la proliferación y diferenciación.', 'Funcional', 'EGFR', 'var5'),
+('ANOT009', 'Receptor crítico para la entrada de virus respiratorios en la célula huésped.', 'Infecciosa', 'ACE2', 'var7'),
+('ANOT010', 'Proteína esencial para la contracción del sarcómero en el músculo cardíaco.', 'Estructural', 'MYH7', NULL);
