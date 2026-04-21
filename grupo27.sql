@@ -1,9 +1,18 @@
+-- UNIR | Máster en Bioinformática | Bases de Datos y Recursos Bioinformáticos 
+-- Taller grupal. Creación de una base de datos genómica
+
+-- Grupo 27: Rita Pellissa Valera, Samuel Pintos González, Tamara Noya Mosquera, 
+-- Vanesa de las Heras Hermosilla, Virginia García-Loygorri Arias y Yannis Avlonitis Egea.
+
+
 
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `grupo27` DEFAULT CHARACTER SET UTF8MB4 ;
 USE `grupo27`;
+
+
 
 -- -----------------------------------------------------
 -- Table `grupo27`.`gen`
@@ -18,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`gen` (
     PRIMARY KEY (G_id_gen)
 )  ENGINE=INNODB;
 
-INSERT INTO gen (G_id_gen, G_cromosoma, G_nombre_gen, G_posicion_gen, G_descripcion_gen)
+INSERT INTO `grupo27`.`gen` (G_id_gen, G_cromosoma, G_nombre_gen, G_posicion_gen, G_descripcion_gen)
 VALUES 
 ('TP53', 17, 'Tumor Protein p53', '7668421', 'Guardián del genoma; esencial para regular el ciclo celular y prevenir tumores.'),
 ('BRCA1', 17, 'BRCA1 DNA Repair Associated', '43044295', 'Implicado en reparación de roturas de doble cadena del ADN y estabilidad genómica.'),
@@ -38,18 +47,25 @@ VALUES ('ERROR1', 1, '100');
 INSERT INTO gen (G_id_gen, G_cromosoma, G_nombre_gen, G_posicion_gen)
 VALUES ('ERROR1', 1, 'Gen Fallido', '100');
 
-CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (
-    v_id_variante VARCHAR(10),
-    v_nomenclatura_c VARCHAR(50) NOT NULL PRIMARY KEY,
-    v_id_gen VARCHAR(15) NOT NULL  ,
-    v_secuencia INT(6) NOT NULL,
+
+
+
+-- -----------------------------------------------------
+-- Table `grupo27`.`variante`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `grupo27`.`variante` (
+    v_id_variante VARCHAR(10) PRIMARY KEY,
+    v_nomenclatura_c VARCHAR(50) NOT NULL ,
+    v_id_gen VARCHAR(15) NOT NULL ,
+    v_secuencia INT NOT NULL,
     v_tipo_variante VARCHAR(10) NOT NULL,
     v_alelo_referencia VARCHAR(15) DEFAULT '-',
     v_alelo_mutado VARCHAR(6) NOT NULL,
     v_posicion_cromosomica VARCHAR(50) NOT NULL,
     FOREIGN KEY (`v_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`));
 
-INSERT INTO Variantes (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_alelo_mutado, v_posicion_cromosomica)
+INSERT INTO `grupo27`.`variante` (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_alelo_mutado, v_posicion_cromosomica)
 VALUES 
 ('var1', 'NM_000546.5:c.215C>G', 'TP53', '215', 'SNV', 'C', 'G', 'chr17:7673803'), 
 ('var2', 'NM_007294.4:c.68_69del', 'BRCA1', '68', 'DEL', 'AG', '-', 'chr17:43045729'), 
@@ -62,7 +78,14 @@ VALUES
 ('var9', 'NM_001354689.2:c.5266dupC', 'TNF',  '5266', 'INS', '-', 'C', 'chr17:43070945'), 
 ('var10', 'NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
 
-CREATE TABLE IF NOT EXISTS `paciente` (
+
+
+
+-- -----------------------------------------------------
+-- Table `grupo27`.`paciente`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `grupo27`.`paciente` (
     `P_DNI` VARCHAR(50) NOT NULL,
     `P_Nombre` VARCHAR(30) NOT NULL,
     `P_Edad` INT(2) NOT NULL,
@@ -71,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `paciente` (
     PRIMARY KEY (`P_DNI`)
 ) ENGINE=INNODB;
 
-INSERT INTO `paciente` (`P_DNI`, `P_Nombre`, `P_Edad`, `P_Fecha_diag`, `P_ID_variante`)
+INSERT INTO `grupo27`.`paciente` (`P_DNI`, `P_Nombre`, `P_Edad`, `P_Fecha_diag`, `P_ID_variante`)
 VALUES
 ('99966699Y', 'Leovigildo de Biedma', 55, '2025-02-02', 'var1'),
 ('71007100H', 'Ambrosio Gómez', 62, '2025-03-03', 'var2'),
@@ -84,7 +107,14 @@ VALUES
 ('12141621C', 'Aniceto Espidiforo', 65, '2025-01-03', 'var9'),
 ('90977786H', 'Glácida sinclética', 49, '2025-05-11', 'var10');
 
-CREATE TABLE IF NOT EXISTS `estudio` (
+
+
+
+-- -----------------------------------------------------
+-- Table `grupo27`.`estudio`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `grupo27`.`estudio` (
 	`E_id_gen` VARCHAR(45) NOT NULL,
     `E_id_variante` VARCHAR(10) NOT NULL,
 	`E_Referencia_DOI` VARCHAR(8) NOT NULL PRIMARY KEY,
@@ -93,10 +123,10 @@ CREATE TABLE IF NOT EXISTS `estudio` (
     `E_Titulo` VARCHAR(150) NOT NULL,
     CONSTRAINT `Formato_referencia_DOI` CHECK (`E_Referencia_DOI` REGEXP '^[a-zA-Z]{4}/[0-9]{3}$'), # cuatro letras, /, tres números
     FOREIGN KEY(`E_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`),
-    FOREIGN KEY(`E_id_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`))
+    FOREIGN KEY(`E_id_variante`) REFERENCES `grupo27`.`variante` (`v_id_variante`))
     ENGINE=INNODB;
     
-INSERT INTO estudio (E_id_gen, E_id_variante, E_Referencia_DOI, E_Fecha_publicacion, E_Revista, E_Titulo )
+INSERT INTO `grupo27`.`estudio` (E_id_gen, E_id_variante, E_Referencia_DOI, E_Fecha_publicacion, E_Revista, E_Titulo )
 VALUES
 ('TP53', 'var1', 'ABCD/123', 07072003, 'Nature', 'TP53 role in cell homeostasis'),
 ('BRCA1', 'var2', 'BRCA/001', 15102022, 'Science', 'DNA repair mechanisms and BRCA1 mutations'),
@@ -111,11 +141,40 @@ VALUES
 
 
 
+
+-- -----------------------------------------------------
+-- Table `grupo27`.`anotacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `grupo27`.`anotacion` (
+   `A_id_anotacion` VARCHAR(45) NOT NULL PRIMARY KEY,
+    `A_función_gen` TEXT NOT NULL,
+    `A_tipo` VARCHAR(100) NOT NULL,
+    `A_id_gen` VARCHAR(45) NOT NULL,
+    `A_id_variante` VARCHAR(10) NULL, 
+    FOREIGN KEY (`A_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`),
+    FOREIGN KEY (`A_id_variante`) REFERENCES `grupo27`.`variante` (`v_id_variante`)) 
+    ENGINE=INNODB;
+    
+INSERT INTO `grupo27`.`anotacion` (A_id_anotacion, A_función_gen, A_tipo, A_id_gen, A_id_variante)
+VALUES
+('ANOT001', 'Mantenimiento de la integridad genómica mediante la parada del ciclo celular.', 'Funcional', 'TP53', NULL),
+('ANOT002', 'Variante patogénica vinculada a un aumento del riesgo de tumores en edad temprana.', 'Clínica', 'TP53', 'var1'),
+('ANOT003', 'Reparación de roturas de doble cadena en el ADN por recombinación homóloga.', 'Funcional', 'BRCA1', NULL),
+('ANOT004', 'Variante clasificada como de alta penetrancia para cáncer de mama hereditario.', 'Clínica', 'BRCA1', 'var2'),
+('ANOT005', 'Transporte de colesterol y otras grasas en el torrente sanguíneo.', 'Metabólica', 'APOE', NULL),
+('ANOT006', 'Alelo asociado con la acumulación de placas de amiloide en el tejido cerebral.', 'Clínica', 'APOE', 'var3'),
+('ANOT007', 'Codificación de la hormona responsable de la absorción de glucosa.', 'Fisiológica', 'INS', 'var4'),
+('ANOT008', 'Implicado en la señalización celular para la proliferación y diferenciación.', 'Funcional', 'EGFR', 'var5'),
+('ANOT009', 'Receptor crítico para la entrada de virus respiratorios en la célula huésped.', 'Infecciosa', 'ACE2', 'var7'),
+('ANOT010', 'Proteína esencial para la contracción del sarcómero en el músculo cardíaco.', 'Estructural', 'MYH7', NULL);
+
+
+
+
 -- -----------------------------------------------------
 -- Table `grupo27`.`secuencia_canonica` (# no se si deberia poner el guión bajo o no, en el esquema está sin guión y con tilde)
 -- Contiene las columnas para poder formar el archivo FASTA si se quisiera exportar la información por fila
 -- -----------------------------------------------------
-DROP TABLE grupo27.secuencia_canonica;
 
 CREATE TABLE IF NOT EXISTS `grupo27`.`secuencia_canonica` (
     `S_id_gen` VARCHAR(45) NOT NULL,
@@ -147,7 +206,7 @@ CHECK (CHAR_LENGTH(`S_secuencia_ADN`) BETWEEN 10 AND 1000);
 
 
 -- Inserción de datos en `secuencia_canonica`
-INSERT INTO secuencia_canonica (S_id_gen, S_genoma_REF, S_tipo, S_posicion_relativa, S_secuencia_ADN)
+INSERT INTO `grupo27`.`secuencia_canonica` (S_id_gen, S_genoma_REF, S_tipo, S_posicion_relativa, S_secuencia_ADN)
 VALUES 
 ('TP53', 'GRCh37', 'Exón 1', 'chr17:7571720-7590863', 'ACTGCCATGGAGGAGCCGCAGTCAGATCCTAGCGTCGAGCCCCCTCTGAGTCAGGAAACATTTTCAGACCTATGGAAACTACTTCCTGAAAACAACGTTCTGTCCCCCTTGCCGTCCCAAGCAATTGGATGATTTGATGCTGTCCCCGGACGATATTGAACCAATGGTTCACTGAAGACCCAGGTCCAGATGAAGCTC'),
 ('TP53', 'GRCh38', 'Exón 1', 'chr17:7661779-7687538', 'ACTGCCATGGAGGAGCCGCAGTCAGATCCTAGCGTCGAGCCCCCTCTGAGTCAGGAAACATTTTCAGACCTATGGAAACTACTTCCTGAAAACAACGTTCTGTCCCCCTTGCCGTCCCAAGCAACTGGATGATTTGATGCTGTCCCCGGACGATATTGAACTAATGGTTCACTGAAGACCCAGGTCCAGATGAAGCTC'),
@@ -167,7 +226,7 @@ VALUES
 ('TP53', 'GRCh37', 'Exón 11', 'chr17:7668421-7668600', 'ACTGCCATGGAGGAGCCGCAGTCAGATCCTAGCGTCGAGCCCCCTCTGAGTCAGGAAACATTTTCAGACCTATGGAAACTACTTCCTGAAAACAACGTTCTGTCCCCCTTGCCGTCCCAAGCAATGGATGATTTGATGCTGTCCCCGGACGATATTGAACAATGGTTCACTGAAGACCCAGGTCCAGATGAAGCTC');
 
 -- Inserción sin especificación de S_tipo
-INSERT INTO secuencia_canonica (S_id_gen, S_genoma_REF, S_posicion_relativa, S_secuencia_ADN)
+INSERT INTO `grupo27`.`secuencia_canonica` (S_id_gen, S_genoma_REF, S_posicion_relativa, S_secuencia_ADN)
 VALUES 
 ('ACE2', 'GRCh38', 'chrX:15579156-15621069', 'TCCATTGCTGTCCTTGCCGTCCCAAGCAATGGATGATTTGATGCTGTCCCCGGACGATATTGAACAATGGTTCACTGAAGACCCAGGTCCAGATGAAGCTCCAGAATTGATGCTGTCCCCGGACGATATTGAACAATGGTTCACTGAAGACCCAGGTCCAGATGAAGCTCCAGAATTGATGCTGTCCCCGGAC'),
 ('MTHFR', 'GRCh38', 'chr1:11785723-11806103', 'GCTTTGAGGCTGACCTGAAGCACTTGCTGGACCTGGTGAGGGAGCTGAACCTGCTGCAGCGGCTGGAGGCCGACCTGAGGGAGCTGAACCTGCTGCAGCGGCTGGAGGCCGACCTGAGGGAGCTGAACCTGCTGCAGCGGCTGGAGGCCGACCTGAGGGAGCTGAACCTGCTGCAGCGGCTGGAGGCCGACCT');
