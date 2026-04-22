@@ -41,11 +41,11 @@ VALUES
 ('MYH7', 14, 'Myosin Heavy Chain 7', '23412739', 'Proteína motora del músculo cardíaco; vinculada a miocardiopatía hipertrófica.');
 
 -- Gestión de errores: Ni La columna del nombre G_nombre_gen ni la descripción del gen G_descripcion_gen pueden ser NULL:
-INSERT INTO gen (G_id_gen, G_cromosoma, G_posicion_gen)
-VALUES ('ERROR1', 1, '100');
+-- INSERT INTO gen (G_id_gen, G_cromosoma, G_posicion_gen)
+-- VALUES ('ERROR1', 1, '100');
 
-INSERT INTO gen (G_id_gen, G_cromosoma, G_nombre_gen, G_posicion_gen)
-VALUES ('ERROR1', 1, 'Gen Fallido', '100');
+-- INSERT INTO gen (G_id_gen, G_cromosoma, G_nombre_gen, G_posicion_gen)
+-- VALUES ('ERROR1', 1, 'Gen Fallido', '100');
 
 
 
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`variante` (
     v_id_gen VARCHAR(15) NOT NULL ,
     v_secuencia INT NOT NULL,
     v_tipo_variante VARCHAR(10) NOT NULL,
-    v_alelo_referencia VARCHAR(15) DEFAULT '-',
-    v_alelo_mutado VARCHAR(6) NOT NULL,
+    v_alelo_referencia VARCHAR(15) NOT NULL,
+    v_alelo_mutado VARCHAR(6) DEFAULT '-',
     v_posicion_cromosomica VARCHAR(50) NOT NULL,
     FOREIGN KEY (`v_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`));
 
@@ -74,9 +74,13 @@ VALUES
 ('var5', 'NM_005228.5:c.2573T>G', 'EGFR', '2573', 'SNV', 'T', 'G', 'chr7:55181378'), 
 ('var6', 'NM_000314.8:c.1582G>A', 'CFTR','1582', 'SNV', 'G', 'A', 'chr10:87863126'), 
 ('var7', 'NM_000518.5:c.20A>T', 'ACE2', '20', 'SNV', 'A', 'T', 'chr11:5227002'), 
-('var8', 'NM_000249.4:c.35delG', 'MTHFR', '35', 'DEL', 'G', '-', 'chr13:20189547'), 
-('var9', 'NM_001354689.2:c.5266dupC', 'TNF',  '5266', 'INS', '-', 'C', 'chr17:43070945'), 
-('var10', 'NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
+('var8', 'NM_000249.4:c.35delG', 'MTHFR', '35', 'DEL', 'G', '-', 'chr13:20189547');
+
+-- Comprobación de que el default de - para el alelo mutado funciona:
+INSERT INTO `grupo27`.`variante` (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_posicion_cromosomica)
+VALUES 
+('var9', 'NM_001354689.2:c.5266dupC', 'TNF',  '5266', 'INS', 'C', 'chr17:43070945'), 
+('var10', 'NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'chr12:102840062');
 
 
 
@@ -146,7 +150,7 @@ VALUES
 -- Table `grupo27`.`anotacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `grupo27`.`anotacion` (
-   `A_id_anotacion` VARCHAR(45) NOT NULL PRIMARY KEY,
+   `A_id_anotacion` VARCHAR(45) PRIMARY KEY,
     `A_función_gen` TEXT NOT NULL,
     `A_tipo` VARCHAR(100) NOT NULL,
     `A_id_gen` VARCHAR(45) NOT NULL,
