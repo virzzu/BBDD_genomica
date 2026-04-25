@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`estudio` (
     `E_Titulo` VARCHAR(150) NOT NULL,
     CONSTRAINT `Formato_referencia_DOI` CHECK (`E_Referencia_DOI` REGEXP '^[a-zA-Z]{4}/[0-9]{3}$'), # cuatro letras, /, tres números
     FOREIGN KEY(`E_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`),
-    FOREIGN KEY(`E_id_variante`) REFERENCES `grupo27`.`variante` (`v_id_variante`))
+    FOREIGN KEY(`E_id_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`))
     ENGINE=INNODB;
     
 INSERT INTO `grupo27`.`estudio` (E_id_gen, E_id_variante, E_Referencia_DOI, E_Fecha_publicacion, E_Revista, E_Titulo )
@@ -142,9 +142,6 @@ VALUES
 ('MTHFR', 'var8', 'FOLA/333', 14022023, 'Nutrients', 'MTHFR enzymatic activity and folate processing'),
 ('TNF', 'var9', 'INFL/444', 09092021, 'Immunology', 'Cytokine response in chronic inflammation'),
 ('MYH7', 'var10', 'MYOH/888', 11122024, 'Corazon', 'Myosin heavy chain mutations in heart disease');
-
-
-
 
 -- -----------------------------------------------------
 -- Table `grupo27`.`anotacion`
