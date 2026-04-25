@@ -90,12 +90,11 @@ VALUES
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `grupo27`.`paciente` (
-    `P_DNI` VARCHAR(50) NOT NULL,
+    `P_DNI` VARCHAR(50) PRIMARY KEY,
     `P_Nombre` VARCHAR(30) NOT NULL,
     `P_Edad` INT(2) NOT NULL,
     `P_Fecha_diag` DATE NOT NULL,
     `P_ID_variante` VARCHAR(5) NOT NULL,
-    PRIMARY KEY (`P_DNI`),
 	FOREIGN KEY (`P_ID_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`)
 ) ENGINE=INNODB;
 
