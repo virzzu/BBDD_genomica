@@ -95,7 +95,8 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`paciente` (
     `P_Edad` INT(2) NOT NULL,
     `P_Fecha_diag` DATE NOT NULL,
     `P_ID_variante` VARCHAR(5) NOT NULL,
-    PRIMARY KEY (`P_DNI`)
+    PRIMARY KEY (`P_DNI`),
+	FOREIGN KEY (`P_ID_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`)
 ) ENGINE=INNODB;
 
 INSERT INTO `grupo27`.`paciente` (`P_DNI`, `P_Nombre`, `P_Edad`, `P_Fecha_diag`, `P_ID_variante`)
