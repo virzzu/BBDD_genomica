@@ -54,7 +54,7 @@ VALUES
 -- Table `grupo27`.`variante`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (
+CREATE TABLE IF NOT EXISTS `grupo27`.`variante` (
     v_id_variante VARCHAR(10) PRIMARY KEY,
     v_nomenclatura_c VARCHAR(50) NOT NULL ,
     v_id_gen VARCHAR(15) NOT NULL ,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`variantes` (
     v_posicion_cromosomica VARCHAR(50) NOT NULL,
     FOREIGN KEY (`v_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`));
 
-INSERT INTO Variantes (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_alelo_mutado, v_posicion_cromosomica)
+INSERT INTO `grupo27`.`variante` (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_alelo_mutado, v_posicion_cromosomica)
 VALUES 
 ('var1', 'NM_000546.5:c.215C>G', 'TP53', '215', 'SNV', 'C', 'G', 'chr17:7673803'), 
 ('var4', 'NM_004333.6:c.1799T>A', 'INS',  '1799', 'SNV', 'T', 'A', 'chr7:140453136'), 
@@ -75,7 +75,7 @@ VALUES
 ('var10', 'NM_000277.2:c.1222C>T', 'MYH7', '1222', 'SNV', 'C', 'T', 'chr12:102840062');
 
 -- Comprobación de que el default de - para el alelo mutado funciona:
-INSERT INTO Variantes (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_posicion_cromosomica)
+INSERT INTO `grupo27`.`variante` (v_id_variante, v_nomenclatura_c, v_id_gen, v_secuencia, v_tipo_variante, v_alelo_referencia, v_posicion_cromosomica)
 VALUES 
 ('var2', 'NM_007294.4:c.68_69del', 'BRCA1', '68', 'DEL', 'AG', 'chr17:43045729'), 
 ('var3', 'NM_000059.4:c.5946delT', 'APOE', '5946', 'DEL', 'T', 'chr13:32356432'), 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`paciente` (
     `P_Edad` INT(2) NOT NULL,
     `P_Fecha_diag` DATE NOT NULL,
     `P_ID_variante` VARCHAR(5) NOT NULL,
-	FOREIGN KEY (`P_ID_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`)
+	FOREIGN KEY (`P_ID_variante`) REFERENCES `grupo27`.`variante` (`v_id_variante`)
 ) ENGINE=INNODB;
 
 INSERT INTO `grupo27`.`paciente` (`P_DNI`, `P_Nombre`, `P_Edad`, `P_Fecha_diag`, `P_ID_variante`)
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `grupo27`.`estudio` (
     `E_Titulo` VARCHAR(150) NOT NULL,
     CONSTRAINT `Formato_referencia_DOI` CHECK (`E_Referencia_DOI` REGEXP '^[a-zA-Z]{4}/[0-9]{3}$'), # cuatro letras, /, tres números
     FOREIGN KEY(`E_id_gen`) REFERENCES `grupo27`.`gen` (`G_id_gen`),
-    FOREIGN KEY(`E_id_variante`) REFERENCES `grupo27`.`variantes` (`v_id_variante`))
+    FOREIGN KEY(`E_id_variante`) REFERENCES `grupo27`.`variante` (`v_id_variante`))
     ENGINE=INNODB;
     
 INSERT INTO `grupo27`.`estudio` (E_id_gen, E_id_variante, E_Referencia_DOI, E_Fecha_publicacion, E_Revista, E_Titulo )
